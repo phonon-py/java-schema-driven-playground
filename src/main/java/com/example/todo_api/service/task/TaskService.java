@@ -3,6 +3,7 @@ package com.example.todo_api.service.task;
 import com.example.todo_api.repository.tasks.TaskRecord;
 import com.example.todo_api.repository.tasks.TaskRepository;
 import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Size;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -37,5 +38,10 @@ public class TaskService {
         taskRepository.insert(record);
         return new TaskEntity(record.getId(), record.getTitle());
 
+    }
+
+    public TaskEntity update(Long taskId, @NotNull @Size(min = 1, max = 256) String title) {
+        taskRepository.update(new TaskRecord(taskId, title));
+        return find(taskId);
     }
 }
