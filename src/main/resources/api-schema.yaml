@@ -141,7 +141,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/BadRequestError"
+                $ref: "#/components/schemas/ResourceNotFoundError"
         '404':
           description: "Not Found"
       requestBody:
@@ -150,7 +150,30 @@ paths:
           application/json:
             schema:
               $ref: "#/components/schemas/TaskForm"
-
+    delete:
+      summary: "タスク削除"
+      description: "指定されたタスクを削除します"
+      operationId: "deleteTask"
+      tags:
+        - tasks
+      parameters:
+        - name: taskId
+          in: path
+          required: true
+          description: "削除するタスクのID"
+          schema:
+            type: integer
+            format: int64
+            minimum: 1
+      responses:
+        '204':
+          description: "No Content"
+        '404':
+          description: "Not Found"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ResourceNotFoundError"
 components:
   schemas:
     TaskForm:

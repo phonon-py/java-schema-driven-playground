@@ -41,7 +41,15 @@ public class TaskService {
     }
 
     public TaskEntity update(Long taskId, @NotNull @Size(min = 1, max = 256) String title) {
+        taskRepository.select(taskId)
+                        .orElseThrow(() -> new TaskEntityNotFoundException(taskId));
         taskRepository.update(new TaskRecord(taskId, title));
         return find(taskId);
+    }
+
+    public void delete(Long taskId) {
+        taskRepository.select(taskId)
+                        .orElseThrow(() -> new TaskEntityNotFoundException(taskId));
+        taskRepository.delete(taskId);
     }
 }
